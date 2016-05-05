@@ -71,7 +71,13 @@ func ReadLSB() (*LSB, error) {
 var OnClassic bool
 
 func init() {
-	OnClassic = osutil.FileExists("/var/lib/dpkg/status")
+	if (osutil.FileExists("/var/lib/dpkg/status")) {
+		OnClassic = true
+	} else if (osutil.FileExists("/usr/bin/pacman")) {
+		OnClassic = true
+	} else {
+		OnClassic = false
+	}
 }
 
 // MockOnClassic forces the process to appear inside a classic
